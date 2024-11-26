@@ -33,7 +33,7 @@ def qr_generator(data: str, data_type: int, error_correction_level: chr) -> list
     draw_dark_module(qr_code)
     write_version_information(qr_code,version)
     data_area = get_writing_path(qr_code,version)
-    write_data(qr_code,get_data(data,data_type,ecl,version),data_area,version)
+    write_data(qr_code,get_data(data,data_type,ecl,version),data_area)
     mask = select_mask(qr_code,data_area)
     apply_mask(qr_code,mask,data_area)
     write_format_information(qr_code,ecl,mask)
