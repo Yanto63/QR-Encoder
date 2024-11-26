@@ -59,7 +59,14 @@ def alphanumeric_encoding(string: str) -> str:
 
 def byte_encoding(string: str) -> str:
     """Encodes data with the byte method into binary string."""
-    #TODO Byte encoding method.
+    encoded = ""
+    for c in string:
+        h = ord(c.encode("iso_8859_1","ignore"))
+        b = bin(h)[2:]
+        for _ in range(8 - len(b)):
+            b = "0" + b
+        encoded += b
+    return encoded
 
 def kanji_encoding(string: str) -> str:
     """Encodes data with the kanji method into binary string."""
