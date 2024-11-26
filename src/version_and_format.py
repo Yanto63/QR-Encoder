@@ -1,11 +1,32 @@
-from QRCodeStandards import VERSION_INFORMATION_STRINGS
+def get_version_information_string(version: int) -> str:
+    """Returns the version information string according to the given QR-Code version."""
+    if version < 7:
+        return
+    vs = ""
+    bin_version = format(version,'b')
+    for _ in range(6-len(bin_version)):
+        bin_version  = "0" + bin_version
+    vs += bin_version
+    generator_polynomial_coefficients = "1111100100101"
+    # Format string division.
+    dividende = vs + "000000000000"
+    while dividende[0] == "0":
+        dividende = dividende[1:]
+    while len(dividende) > 12:
+        gpc = generator_polynomial_coefficients
+        for _ in range(len(dividende) - len(generator_polynomial_coefficients)):
+            gpc += "0"
+        dividende = format((int(dividende,base=2)^int(gpc,base=2)),'b')
+    for _ in range(12 - len(dividende)):
+        dividende = "0" + dividende
+    vs += dividende
+    return vs
 
 def write_version_information(qr_code: list, version: int):
     """Writes the version information string on the given QR-Code."""
     if version < 7:
         return
-    vis = VERSION_INFORMATION_STRINGS[version]
-    # TODO : Could compute the version information string instead of listing all of them...
+    vis = get_version_information_string(version)
     start = 4 * version + 6
     for i in range(6):
         for j in range(3):
