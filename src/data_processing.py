@@ -64,8 +64,15 @@ def get_data(data: str, data_type: int, ecl: int, version: int) -> str:
     for _ in range(cci_length - len(char_count_indicator)):
         d += "0"
     d += char_count_indicator
-    d += alphanumeric_encoding(data)
-    # TODO : change the enconding according to the data type.
+    match data_type:
+        case 0:
+            d += numeric_encoding(data)
+        case 1:
+            d += alphanumeric_encoding(data)
+        case 2:
+            d += byte_encoding(data)
+        case 3:
+            d += kanji_encoding(data)
     terminator_length = (DATA_CODEWORDS_NUMBER[ecl][version-1] * 8) - len(d)
     if terminator_length > 4:
         terminator_length = 4
