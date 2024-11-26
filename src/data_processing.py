@@ -88,7 +88,7 @@ def get_data(data: str, data_type: int, ecl: int, version: int) -> str:
     structured_data = structure_data(data_codewords,ec_codewords,version)
     return structured_data
 
-def write_data(qr_code: list, data:str, data_path: list, version: int):
+def write_data(qr_code: list, data:str, data_path: list):
     """Writes the data provided into the given QR-Code."""
     for i in range(len(data_path)):
         qr_code[data_path[i][0]][data_path[i][1]] = int(data[i])
