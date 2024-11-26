@@ -46,9 +46,9 @@ if __name__ == "__main__":
         print("Use the raw command to print the QR-Code in you terminal.\nUse -h to display this help.\nUse -d to disply it using matplotlib.")
     else:
         message = input("Type your message here: ")
-        qr_code = qr_generator(message,1,'H')
+        qrcode = qr_generator(message,2,'H')
         if len(argv) == 2 and argv[1] == "-d":
             from display import display_enhanced
-            display_enhanced(qr_code)
+            display_enhanced(qrcode)
         else:
-            display_qr_code(qr_code)
+            display_qr_code(qrcode)
