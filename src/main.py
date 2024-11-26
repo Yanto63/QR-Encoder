@@ -1,5 +1,7 @@
 ### For documentation, see : https://www.thonky.com/qr-code-tutorial/
 
+from sys import argv
+
 from QRCodeStandards import *
 from drawing_constant import draw_positioning, draw_alignment, draw_timing, draw_dark_module
 from version_and_format import write_version_information, write_format_information
@@ -40,6 +42,13 @@ def qr_generator(data: str, data_type: int, error_correction_level: chr) -> list
     return qr_code
 
 if __name__ == "__main__":
-    message = input("Type your message here: ")
-    qr_code = qr_generator(message,1,'H')
-    display_qr_code(qr_code)
+    if len(argv) > 2 or (len(argv) == 2 and argv[1] != "-d"):
+        print("Use the raw command to print the QR-Code in you terminal.\nUse -h to display this help.\nUse -d to disply it using matplotlib.")
+    else:
+        message = input("Type your message here: ")
+        qr_code = qr_generator(message,1,'H')
+        if len(argv) == 2 and argv[1] == "-d":
+            from display import display_enhanced
+            display_enhanced(qr_code)
+        else:
+            display_qr_code(qr_code)
