@@ -30,6 +30,8 @@ def divide_message_polynomial_by_generator_polymonial(message_polynomial_coeffic
     for i in range(gen_pol_coe_exp_len):
         gpce[i+mes_pol_coe_len-1] = generator_polynomial_coefficient_exponents[i]
     for i in range(mes_pol_coe_len):
+        if mpc[-1] == 0:
+            continue
         coeff = QRCODE_GF256_ANTILOG[mpc[-1]]
         tmp_pol = [gpce[j] for j in range(len(gpce))]
         for j in range(len(tmp_pol)):
