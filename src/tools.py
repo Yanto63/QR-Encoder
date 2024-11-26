@@ -21,11 +21,17 @@ def get_writing_path(qr_code: list, version: int) -> list:
                     y -= 1
             else:
                 y += 1
-                if y == 6: # Reaching Horizontal timing line while next to the version information zone.
+                if y == 6 and x == len(qr_code[0])-12: # Reaching Horizontal timing line while next to the version information zone.
                     x += 1
                     y += 1
                     vertical_mode = False
                     even = False
+                elif qr_code[y][x+1] == -1: # End of vertical mode.
+                    x += 1
+                    vertical_mode = False
+                    even = False
+                elif y == 6: # Reaching Horizontal timing line while next to an alignment pattern.
+                    y += 1
         else:
             if even:
                 x += 1
@@ -77,7 +83,11 @@ def get_writing_path(qr_code: list, version: int) -> list:
                     elif y == 6: # Reaching Horizontal timing line.
                         y += 1
                     elif qr_code[y][x] == 1: # Reaching Alignment pattern.
-                        y += 5
+                        if qr_code[y][x-1] == 1: # If not on the side.
+                            y += 5
+                        else: # If on the side.
+                            x -= 1
+                            vertical_mode = True
             else:
                 x -= 1
             even = not even
